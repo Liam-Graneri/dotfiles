@@ -1,0 +1,35 @@
+profile solo {
+	output eDP-1 mode 3840x2160 scale 2
+}
+
+profile uni-all {
+	output eDP-1 mode 3840x2160 position 0,1480 scale 2
+	output "Samsung Electric Company C24F390 HTQK700676" mode 1920x1080 position 0,400
+	output "Unknown HP E243i CNK0142BRQ" mode 1920x1200 position 1920,0 transform 90
+
+	exec notify-send "Connected to all Uni Monitors"
+}
+
+profile uni-samsung {
+	output eDP-1 mode 3840x2160 position 0,1080 scale 2
+	output "Samsung Electric Company C24F390 HTQK700676" mode 1920x1080 position 0,0
+
+	exec notify-send "Connected to Uni Samsung Monitor"
+}
+
+profile uni-hp {
+	output eDP-1 mode 3840x2160 position 0,1480 scale 2
+	output "Unknown HP E243i CNK0142BRQ" mode 1920x1200 position 1920,0 transform 90
+
+	exec notify-send "Connected to Uni HP Monitor"
+}
+
+profile uni-nolaptop {
+	output "Samsung Electric Company C24F390 HTQK700676" mode 1920x1080 position 0,400
+	output "Unknown HP E243i CNK0142BRQ" mode 1920x1200 position 1920,0 transform 90
+}
+
+profile home-samsung {
+	output "Samsung Electric Company Odyssey G52A H4ZRC00366" mode 2560x1440 position 0,0
+	output eDP-1 mode 3840x2160 position 2560,940 scale 2
+}

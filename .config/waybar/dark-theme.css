@@ -1,0 +1,6 @@
+@define-color background	rgba(0,0,0,0.5);
+@define-color chars		rgba(255,255,255,1);
+@define-color hover-bg		rgba(0,0,0,0.3);
+@define-color focused-bg	rgba(0,0,0,0.5);
+@define-color warning		rgba(255,140,0,1);
+@define-color urgent		rgba(255,99,71,1);

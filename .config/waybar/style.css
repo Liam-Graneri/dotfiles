@@ -1,0 +1,114 @@
+/* Import 'light-theme.css' or 'dark-theme.css' */
+@import 'dark-theme.css';
+
+
+/* Global Changes to Waybar */
+* {
+    /* `ttf-font-awesome-5` is required to be installed for icons */
+    font-family: "Noto Sans", "Font Awesome 5 Free";
+    font-size: 12px;
+    min-height: 0;
+    color: @chars;
+}
+
+window#waybar {
+    background: @background;
+}
+
+
+
+/* Basic formatting for waybar widgets */
+#clock,
+#battery,
+#bluetooth,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#custom-media,
+#tray,
+#custom-google,
+#mode,
+#idle_inhibitor,
+#sway-workspaces,
+#pulseaudio,
+#custom-playerctl-metadata,
+#custom-google-calendar,
+#sway-window,
+#idle-inhibitor,
+#idle-inhibitor.activated,
+#tray,
+#workspaces,
+#custom-separator,
+#mpd {
+    padding: 1px 8px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    margin-left: 2px;
+    margin-right: 2px;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+
+#workspaces button {
+    background-color: transparent;
+    transition: none;
+}
+
+/* Focussed widgets */
+#workspaces button.focused,
+#idle_inhibitor.activated {
+    background-color: @focused-bg;
+}
+/* Hovering Over Widgets */
+#workspaces button:hover {
+    background-color: @hover-bg;
+}
+
+/* Warning Widgets */
+#battery.warning,
+#cpu.warning,
+#memory.warning,
+#network.disconnected {
+	color: @warning;
+}
+
+
+/* Urgent Widgets */
+@keyframes blink {
+    to {
+        color: @warning;
+    }
+}
+
+#battery.critical,
+#cpu.critical,
+#memory.critical
+#network.disconnected {
+	color: @urgent;
+	animation-name: blink;
+	animation-duration: 0.5s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+}
+
+
+/* Widgets with Red Text */
+#pulseaudio.muted,
+#bluetooth.disabled,
+#workspaces button.urgent {
+    color: @warning;
+}
+
+/* Widgets which require specific custom formatting */
+#custom-playerctl-metadata {
+    background-color: @focused-bg;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0 20;
+}

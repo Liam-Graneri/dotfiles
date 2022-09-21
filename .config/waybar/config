@@ -1,0 +1,197 @@
+// =============================================================================
+//
+// Waybar configuration (https://hg.sr.ht/~begs/dotfiles)
+//
+// Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
+//
+// =============================================================================
+
+{
+	// -------------------------------------------------------------------------
+	// Global configuration
+	// -------------------------------------------------------------------------
+
+	"layer": "top",
+	"position": "top",
+	//"height": 18,
+
+	"modules-left": [
+		"sway/mode",
+		"sway/workspaces",
+		"custom/playerctl-metadata"
+	],
+
+	"modules-right": [
+		"pulseaudio",
+		"battery",
+		"network",
+//		"cpu",
+//		"memory",
+		"bluetooth",
+		"idle_inhibitor",
+		"custom/google-calendar",
+		"clock",
+	],
+
+	// -------------------------------------------------------------------------
+	// Modules
+	// -------------------------------------------------------------------------
+
+	"battery": {
+		"interval": 1,
+		"states": {
+			"good": 50,
+			"warning": 30,
+			"critical": 15
+		},
+		"format": " {icon}", // Icon: bolt
+		"format-discharging": "{icon}",
+		"format-icons": [
+			"",  // Icon: battery-empty
+			"", // Icon: battery-quarter
+			"", // Icon: battery-half
+			"", // Icon: battery-three-quarters
+			"" // Icon: battery-full
+		],
+		"tooltip-format-discharging": "{capacity}%",
+		"tooltip-format": "{capacity}% "
+	},
+
+	"bluetooth": {
+		"format": "",
+		"on-click": "blueman-manager",
+		"tooltip-format": "{num_connections} connected",
+		"tooltip-format-connected": "{num_connections} connected\n\n{device_enumerate}",
+		"tooltip-format-enumerate-connected": "{device_alias}",
+		"tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_battery_percentage}%"
+	},
+
+	"clock": {
+		"interval": 1,
+		"format": "{:%a %b %e  %I:%M %p}",
+		"tooltip-format": "<tt>{calendar}</tt>"
+	},
+
+	"cpu": {
+		"interval": 5,
+		"tooltip": false,
+		"format": " {usage}%", // Icon: microchip
+		"states": {
+		  "good": 0,
+		  "warning": 70,
+		  "critical": 90
+		}
+	},
+
+	"idle_inhibitor": {
+		"format": "{icon}",
+		"format-icons": {
+			"activated": "",
+			"deactivated": ""
+		}
+	},
+
+	"memory": {
+		"interval": 5,
+		"format": " {}%", // Icon: memory
+		"states": {
+			"good": 0,
+			"warning": 70,
+			"critical": 90
+		}
+	},
+
+
+	"network": {
+//		"interface": "??p*",
+		"interval": 2,
+		"format-wifi": "", // Icon: wifi
+		"format-ethernet": "",
+		"format-disconnected": "ﲁ",
+		"tooltip-format-wifi": "-- {essid} --\nSignal Strength:\t{signalStrength}%\nDown:\t\t\t\t{bandwidthDownBits}\nUp:\t\t\t\t\t{bandwidthUpBits}",
+		"on-click": "nm-connection-editor",
+	},
+
+	"sway/mode": {
+		"format": "<span style=\"italic\"> {}</span>", // Icon: expand-arrows-alt
+		"tooltip": false
+	},
+
+	"sway/window": {
+		"format": "{}",
+		"max-length": 30,
+		"tooltip": false,
+	},
+
+	"sway/workspaces": {
+		"disable-scroll": false,
+		"persistent_workspaces": {
+			"1": [],
+			"2": [],
+			"3": [],
+			"4": [],
+			"5": [],
+			"6": [],
+			"7": [],
+			"8": []},
+	        "format": "{icon}",
+	        "format-icons": {
+			"1": "",
+			"2": "",
+			"3": "",
+			"4": ">_",
+			"5": "",
+			"6": "",
+			"7": "",
+			"8": "",
+			"9": "",
+			"10": ""
+	        }
+	},
+
+	"pulseaudio": {
+		"scroll-step": 1,
+		"format": "  {volume}%",
+		"format-bluetooth": "  {volume}%",
+		"format-muted": "",
+		"format-icons": {
+			"headphones": "",
+			"handsfree": "",
+			"headset": "",
+			"phone": "",
+			"portable": "",
+			"car": "",
+			"default": ["", ""]
+		},
+		"on-click": "pavucontrol"
+	},
+
+
+	"tray": {
+		"icon-size": 21,
+		"show-passive-items": false
+	},
+
+	"custom/google": {
+		"format": "",
+		"tooltip": "Google Search: New Firefox Window",
+		"on-click": "firefox google.com"
+	},
+
+	"custom/playerctl-metadata": {
+		"format": "{}",
+		"max-length": 100,
+		"interval": 1,
+		"exec": "python ~/.config/waybar/scripts/playerctl_metadata.py",
+		"on-click": "playerctl play-pause"
+	},
+	"custom/google-calendar": {
+		"format": "",
+		"tooltip-format": "{}",
+		"exec": "python ~/.config/waybar/scripts/google-calendar-widget/google-calendar-integration.py",
+		"on-click": "xdg-open https://calendar.google.com/",
+		"on-click-right": "python ~/.config/waybar/scripts/google-calendar-widget/google-calendar-integration.py --show_next",
+		"interval": 60
+	}
+}
+

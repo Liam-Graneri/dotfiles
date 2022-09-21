@@ -1,0 +1,8 @@
+font=NotoSans 10
+background-color=#000000BF
+text-color=#ffffffff
+border-color=#51087EFF
+progress-color=#0000007F
+default-timeout=3000
+width=350
+border-radius=16
