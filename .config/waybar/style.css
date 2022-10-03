@@ -1,5 +1,6 @@
 /* Import 'light-theme.css' or 'dark-theme.css' */
 @import 'dark-theme.css';
+/* @import 'light-theme.css'; */
 
 
 /* Global Changes to Waybar */
@@ -15,6 +16,10 @@ window#waybar {
     background: @background;
 }
 
+tooltip {
+    background: @tt-background;
+    border-radius: 5px;	
+}
 
 
 /* Basic formatting for waybar widgets */
@@ -44,11 +49,11 @@ window#waybar {
 #workspaces,
 #custom-separator,
 #mpd {
-    padding: 1px 8px;
-    margin-top: 1px;
-    margin-bottom: 1px;
+    padding: 0px 8px;
     margin-left: 2px;
     margin-right: 2px;
+    margin-top: 1px;
+    margin-bottom: 1px;
     border-radius: 5px;
     background-color: transparent;
 }
@@ -59,14 +64,15 @@ window#waybar {
     transition: none;
 }
 
-/* Focussed widgets */
-#workspaces button.focused,
-#idle_inhibitor.activated {
-    background-color: @focused-bg;
-}
 /* Hovering Over Widgets */
 #workspaces button:hover {
     background-color: @hover-bg;
+}
+/* Focussed widgets */
+#workspaces button.focused,
+#workspaces button.focused:hover,
+#idle_inhibitor.activated {
+    background-color: @focused-bg;
 }
 
 /* Warning Widgets */

@@ -47,11 +47,11 @@
 		"format": " {icon}", // Icon: bolt
 		"format-discharging": "{icon}",
 		"format-icons": [
-			"",  // Icon: battery-empty
-			"", // Icon: battery-quarter
-			"", // Icon: battery-half
-			"", // Icon: battery-three-quarters
-			"" // Icon: battery-full
+			"",  // Icon: battery empty
+			"", // Icon: battery 20%-40%
+			"", // Icon: battery 40%-60%
+			"", // Icon: battery 60%-80%
+			"" // Icon: battery full
 		],
 		"tooltip-format-discharging": "{capacity}%",
 		"tooltip-format": "{capacity}% "
