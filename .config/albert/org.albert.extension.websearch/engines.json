@@ -1,44 +1,26 @@
 [
     {
-        "iconPath": ":google",
+        "iconPath": "/home/liam/.config/albert/org.albert.extension.websearch/{c8b77f51-a81f-4d91-8dad-e412c9026fbd}.png",
         "name": "Google",
         "trigger": "gg ",
         "url": "https://www.google.com/search?q=%s"
     },
     {
-        "iconPath": ":youtube",
+        "iconPath": "/home/liam/.config/albert/org.albert.extension.websearch/{94ab21bf-88cd-4c12-aaed-3f91a58de917}.png",
         "name": "Youtube",
         "trigger": "yt ",
         "url": "https://www.youtube.com/results?search_query=%s"
     },
     {
-        "iconPath": ":amazon",
+        "iconPath": "/home/liam/.config/albert/org.albert.extension.websearch/{c3d96d34-06ab-4943-b731-020c875f84d8}.png",
         "name": "Amazon",
         "trigger": "ama ",
-        "url": "http://www.amazon.com/s/?field-keywords=%s"
+        "url": "http://www.amazon.com.au/s?k=%s"
     },
     {
-        "iconPath": ":ebay",
-        "name": "Ebay",
-        "trigger": "eb ",
-        "url": "http://www.ebay.com/sch/i.html?_nkw=%s"
-    },
-    {
-        "iconPath": ":github",
+        "iconPath": "/home/liam/.config/albert/org.albert.extension.websearch/{8dc9b45b-588a-4dab-8fcd-42cb8254939c}.png",
         "name": "GitHub",
         "trigger": "gh ",
-        "url": "https://github.com/search?utf8=✓&q=%s"
-    },
-    {
-        "iconPath": ":wolfram",
-        "name": "Wolfram Alpha",
-        "trigger": "=",
-        "url": "https://www.wolframalpha.com/input/?i=%s"
-    },
-    {
-        "iconPath": ":duckduckgo",
-        "name": "DuckDuckGo",
-        "trigger": "dd ",
-        "url": "https://duckduckgo.com/?q=%s"
+        "url": "https://github.com/search?q=%s"
     }
 ]

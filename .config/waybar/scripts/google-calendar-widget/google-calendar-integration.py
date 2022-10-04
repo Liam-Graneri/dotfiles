@@ -141,19 +141,34 @@ def update_events():
     events['duration'] = ((events['end_dt'] - events['start_dt']
                            ).astype('timedelta64[m]'))/60
     events.loc[events['duration'] == 24, 'duration'] = None
-    events = events.sort_values('start_dt').reset_index(drop=True)
-    events = events.drop_duplicates(subset=['summary'])
-    events = events.append(
-        {'summary': 'last_updated', 'start_dt': now}, ignore_index=True)
+    events = (
+        events
+        .sort_values('start_dt')
+        .reset_index(drop=True)
+        .drop_duplicates(subset=['summary'])
+        .append(
+            {'summary': 'last_updated', 'start_dt': now},
+            ignore_index=True
+        )
+    )
     events.to_csv(
         '/home/liam/.config/waybar/scripts/google-calendar-widget/schedule.csv')
     return events
 
 
+def output_detail(df, detail, query):
+    output = (
+        df
+        .query(query)[detail]
+        .iloc[0]
+    )
+    return detail
+
 # Calls notification daemon if start time is more or less now
+
+
 def notify_current_event(t_minus, schedule, header):
     schedule = schedule.loc[schedule['summary'] != 'last_updated']
-    schedule['start_dt'] = pd.to_datetime(schedule['start_dt'])
     # 30s as the script is repeated every minute
     s30 = datetime.timedelta(seconds=30)
     delta = datetime.timedelta(minutes=t_minus)
@@ -162,19 +177,20 @@ def notify_current_event(t_minus, schedule, header):
     upcoming_event = schedule.loc[start_soon]
     if len(upcoming_event) > 0:
         for event in sorted(upcoming_event['summary'].unique()):
-            time = upcoming_event.loc[upcoming_event['summary']
-                                      == event]['start_time'].iloc[0]
-            calendar = upcoming_event.loc[upcoming_event['summary']
-                                          == event]['calendar'].iloc[0]
+            query = 'summary == event'
+            time = output_detail(upcoming_event, 'start_time', query)
+            calendar = output_detail(upcoming_event, 'calendary', query)
             s.call(['notify-send', '-i', '/home/liam/Pictures/google_calendar_logo.png',
                    '-p', f'{header}: {calendar}', f'{time}: {event}'])
 
 
 def notify_next_event(schedule):
-    schedule['start_dt'] = pd.to_datetime(schedule['start_dt'])
-    schedule = schedule.loc[schedule['duration'].notna()]
-    df = schedule.loc[schedule['start_dt'] > now]
-    df = df.loc[df['start_dt'] == df['start_dt'].min()]
+    min_start = schedule['start_dt'].min()
+    df = (
+        schedule
+        .dropna(subset=['duration'])
+        .query('start_dt > @now and start_dt == min_start')
+    )
     event_details = {}
     for detail in ['summary', 'calendar', 'start_date', 'start_time', 'duration']:
         event_details[detail] = df[detail].iloc[0]
@@ -185,9 +201,10 @@ def notify_next_event(schedule):
 def main():
     schedule_path = '/home/liam/.config/waybar/scripts/google-calendar-widget/schedule.csv'
     if os.path.exists(schedule_path):
-        schedule = pd.read_csv(schedule_path)
-        last_updated = pd.to_datetime(
-            schedule.loc[schedule['summary'] == 'last_updated']['start_dt'].iloc[0])
+        schedule = pd.read_csv(schedule_path, parse_dates=[
+                               'start_dt', 'end_dt'])
+        last_updated = schedule.query('summary == "last_updated"')[
+            'start_dt'].min()
         if last_updated <= (now - datetime.timedelta(hours=1)):
             schedule = update_events()
     else:
