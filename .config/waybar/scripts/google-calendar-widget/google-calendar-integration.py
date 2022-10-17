@@ -34,17 +34,21 @@ class CalendarObj:
         event_details = {'summary': [], 'start': [], 'end': []}
 
         for event in events:
-            if (self.work) and ('liam' not in event['summary'].lower()):
+            try:
+                if (self.work) and ('liam' not in event['summary'].lower()):
+                    continue
+                event_details['summary'].append(event['summary'])
+                for time in ['start', 'end']:
+                    for key in event[time].keys():
+                        if 'date' in key:
+                            event_details[time].append(event[time][key])
+                            break
+            except:
                 continue
-            event_details['summary'].append(event['summary'])
-            for time in ['start', 'end']:
-                for key in event[time].keys():
-                    if 'date' in key:
-                        event_details[time].append(event[time][key])
-                        break
         events_df = pd.DataFrame.from_dict(event_details)
         events_df['calendar'] = self.name
-        events_df.loc[events_df['summary'] == 'liam', 'summary'] = self.name
+        events_df.loc[(events_df['summary'] == 'liam') | (events_df['summary'] == 'Liam'),
+                      'summary'] = self.name
         events_df = events_df.dropna(subset=['start'])
         return events_df
 
@@ -189,7 +193,7 @@ def notify_next_event(schedule):
     df = (
         schedule
         .dropna(subset=['duration'])
-        .query('start_dt > @now and start_dt == min_start')
+        .query('start_dt > @now and start_dt == @min_start')
     )
     event_details = {}
     for detail in ['summary', 'calendar', 'start_date', 'start_time', 'duration']:
